@@ -48,14 +48,14 @@ def main():
 
     subprocess.run(["clang-format", "-i", "main.c"])
 
-    cflags_raw = subprocess.check_output(["python3-config", "--cflags"])
+    cflags_raw = subprocess.check_output(["python3-config", "--cflags", "--embed"])
     cflags = [f.strip() for f in cflags_raw.decode().split(" ") if f.strip()]
     cmd = ["gcc", "-c", "-o", "main.o"] + cflags + ["main.c"]
     subprocess.run(cmd)
 
-    ldflags_raw = subprocess.check_output(["python3-config", "--ldflags"])
+    ldflags_raw = subprocess.check_output(["python3-config", "--ldflags", "--embed"])
     ldflags = [f.strip() for f in ldflags_raw.decode().split(" ") if f.strip()]
-    cmd = ["gcc"] + ldflags + ["main.o"]
+    cmd = ["gcc"] + ["main.o"] + ldflags 
     subprocess.run(cmd)
 
 
